@@ -2,7 +2,7 @@
 using System;
 using System.Linq;
 
-public class HelloWorld
+public class Elevator
 {
     public static void Main(string[] args)
     {

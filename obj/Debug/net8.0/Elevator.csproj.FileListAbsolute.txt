@@ -12,3 +12,4 @@ C:\Users\oscar.tafvelin\Elevator\obj\Debug\net8.0\refint\Elevator.dll
 C:\Users\oscar.tafvelin\Elevator\obj\Debug\net8.0\Elevator.pdb
 C:\Users\oscar.tafvelin\Elevator\obj\Debug\net8.0\Elevator.genruntimeconfig.cache
 C:\Users\oscar.tafvelin\Elevator\obj\Debug\net8.0\ref\Elevator.dll
+C:\Users\oscar.tafvelin\Elevator\obj\Debug\net8.0\Elevator.sourcelink.json
