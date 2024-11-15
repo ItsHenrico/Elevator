@@ -3,26 +3,23 @@ using System.Linq;
 using System.Reflection.PortableExecutable;
 using System.Threading;
 
-
-public class Elevator
-{
-    public static void Main(string[] arg)
-    {
+public class Elevator{
+    public static void Main(string[] arg){
         int maxFloor = 5;
         int minFloor = 0;
         Random rnd = new Random();
-        int currentFloor = rnd.Next(minFloor, maxFloor);
-        string direction = "up";
+        int currentFloor = 1;
+        string direction = "down";
         // string desiredDirection = "";
         int floor = rnd.Next(minFloor, maxFloor);
         int currentMaxFloor = maxFloor;
         int currentMinFloor = minFloor;
 
         bool[] upQueue = {
-            true, false, false, true, false, false
+            false, false, false, false, false, false
         };
         bool[] downQueue = {
-            false, true, false, false, false, true
+            false, false, false, false, false, false
         };
 
         int floorsDistance = 0;
@@ -77,6 +74,16 @@ public class Elevator
             //     direction = "down";
             // }
 
+            if (upQueue[minFloor] == true){
+                downQueue[minFloor] = true;
+                upQueue[minFloor] = false;
+            }
+
+            if (downQueue[maxFloor] == true){
+                upQueue[maxFloor] = true;
+                downQueue[maxFloor] = false;
+            }
+
             floorsDistance = Math.Abs(floor - currentFloor);
 
             Move();
@@ -89,45 +96,56 @@ public class Elevator
             while (upQueue.Contains(true) || downQueue.Contains(true)){
                 for (int i = 0; i < floorsDistance; i++){
                     Thread.Sleep(1000);
+                    
                     if (direction == "up"){
-                        for(int g = maxFloor; g > minFloor; g--){
-                            if (upQueue[g] == true){ 
-                                currentMaxFloor = g;
-                                break;
-                            }
-                        }
                         if(currentFloor >= currentMaxFloor){
                             direction = "down";
                             break;
                         }
                         currentFloor++;
-                        Console.WriteLine("Is at floor " + currentFloor);
-                        if (upQueue[currentFloor] == true)
-                        {
-                            Console.WriteLine("The elevator stops at floor: " + currentFloor);
-                            upQueue[currentFloor] = false;
-                        }
-                    }
-                    if (direction == "down"){
-                        for(int g = minFloor; g < maxFloor; g++){
-                            if (downQueue[g] == true){ 
-                                currentMinFloor = g;
+                        for(int g = maxFloor; g > minFloor; g--){
+                            if (upQueue[currentFloor] == true){ 
+                                currentMaxFloor = g;
                                 break;
                             }
                         }
+                        if (upQueue[currentFloor] == true){
+                            Console.WriteLine("The elevator stops at floor: " + currentFloor);
+                            upQueue[currentFloor] = false;
+                        }
+                    
+                        Console.WriteLine("Is at floor " + currentFloor);
+                    }
+                    if (direction == "down"){
                         if(currentFloor <= currentMinFloor){
                             direction = "up";
                             break;
                         }
                         currentFloor--;
-                        Console.WriteLine("Is at floor " + currentFloor);
-                        if (downQueue[currentFloor] == true)
-                        {
+                        for(int g = minFloor; g < maxFloor; g++){
+                            if (downQueue[currentFloor] == true){ 
+                                currentMinFloor = g;
+                                break;
+                            }
+                        }
+                        if (downQueue[currentFloor] == true){
                             Console.WriteLine("The elevator stops at floor" + currentFloor);
                             downQueue[currentFloor] = false;
-                        }
+                        }  
+                        
+                        Console.WriteLine("Is at floor " + currentFloor);
                     }
                 }
+                /*
+                for(int i = 0; i < upQueue.Length; i++)
+                {
+                    Console.WriteLine("upQueue index of "+ i + " " + "is " + upQueue[i]);
+                }
+                for(int i = 0; i < downQueue.Length; i++)
+                {
+                    Console.WriteLine("downQueue index of "+ i + " " + "is " + downQueue[i]);
+                }
+                */
             }
         }
     }
